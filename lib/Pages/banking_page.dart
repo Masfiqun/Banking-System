@@ -11,7 +11,7 @@ class MyBankingPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: ListView(
-          controller: scrollController, // ✅ Use the passed controller here
+          controller: scrollController,
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
           children: [
             const Divider(
@@ -94,7 +94,7 @@ class MyBankingPage extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.black12,
-              offset: const Offset(-4, 4), // 👈 left-tilted shadow
+              offset: const Offset(-4, 4), 
               blurRadius: 6,
             ),
           ],
