@@ -37,16 +37,26 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       slivers: [
         SliverAppBar(
           backgroundColor: Colors.blue.shade800,
-          expandedHeight: 140,
+          expandedHeight: 120,
           pinned: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+            )
+          ),
           flexibleSpace: FlexibleSpaceBar(
             background: Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 60),
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 60),
               child: Row(
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.blue.shade700,
-                    radius: 20,
+                    radius: 23,
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.blue.shade700,
+                      radius: 20,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Column(
@@ -64,11 +74,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         ),
         SliverToBoxAdapter(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -111,6 +121,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   ],
                 ),
               ),
+              Divider(
+                indent: 10,
+                endIndent: 10,
+              ),
+              const SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Wrap(
@@ -128,6 +143,32 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 ),
               ),
               const SizedBox(height: 20),
+              Divider(
+                indent: 10,
+                endIndent: 10,
+              ),
+
+              BankingCard(
+                image: 'asset/image/land.jpeg',
+                onPressed: () {},
+                description: 'Say Goodbye to OTP Hassales & Enjoy Instant Tr...', 
+                title: 'My Banking',
+              ),
+
+              BankingCard(
+                image: 'asset/image/lake.jpeg', 
+                onPressed: (){}, 
+                title: 'Benefits', 
+                description: 'Explore our specially curated offers exclusively taillored for SCU customers'
+              ),
+
+              BankingCard(
+                image: 'asset/image/flower.jpeg', 
+                onPressed: (){}, 
+                title: 'Products', 
+                description: 'Now apply for SCU Amazon Co-brand prepaid card with ease'
+              ),
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: SlideTransition(
