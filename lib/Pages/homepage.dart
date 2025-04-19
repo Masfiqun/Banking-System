@@ -1,3 +1,4 @@
+import 'package:banking_system/Pages/cardPayment.dart';
 import 'package:banking_system/Utils/buttons.dart';
 import 'package:flutter/material.dart';
 
@@ -135,7 +136,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   children: [
                     ActionButton(icon: Icons.send, label: "Fund Transfer", onPressed: () {}),
                     ActionButton(icon: Icons.receipt_long_rounded, label: "Pay Bill", onPressed: () {}),
-                    ActionButton(icon: Icons.credit_card, label: "Card Payment", onPressed: () {}),
+                    ActionButton(icon: Icons.credit_card, label: "Card Payment", onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => CardPayment()));
+                    }),
                     ActionButton(icon: Icons.add, label: "Add Money", onPressed: () {}),
                     ActionButton(icon: Icons.phone_android, label: "Recharge", onPressed: () {}),
                     ActionButton(icon: Icons.more_horiz, label: "More", onPressed: () {}),

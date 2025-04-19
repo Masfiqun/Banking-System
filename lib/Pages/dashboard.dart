@@ -59,11 +59,7 @@ class _DashboardPageState extends State<DashboardPage> {
           backgroundColor: Colors.blue.shade800,
           currentIndex: _currentIndex,
           type: BottomNavigationBarType.fixed,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
+          onTap: _onTabTapped,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.account_balance), label: 'My Banking'),
