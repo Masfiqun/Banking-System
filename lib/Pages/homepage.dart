@@ -1,6 +1,7 @@
 import 'package:banking_system/Pages/cardPayment.dart';
 import 'package:banking_system/Utils/buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,30 +35,43 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   }
 
   // Drawer Item Widget
-  Widget _buildDrawerItem(BuildContext context, {required IconData icon, required String text, required VoidCallback onTap, required IconData  icon2}) {
+  Widget _buildDrawerItem(BuildContext context, {
+    required IconData icon, 
+    required String text, 
+    required VoidCallback onTap, 
+    IconData?  icon2,
+    Color? color,
+  }) {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Row(
+        child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(icon),
-                const SizedBox(width: 15),
-                Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                Row(
+                  children: [
+                    Icon(icon, color: color,),
+                    const SizedBox(width: 15),
+                    Text(
+                      text,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: color
+                      ),
+                    ),
+                  ],
                 ),
+                Icon(icon2),
               ],
             ),
-            Icon(icon2),
+            Divider()
           ],
         ),
       ),
@@ -116,41 +130,55 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   const SizedBox(height: 10,),
                   Column(
                     children: [
-                      Expanded(
-                        child: ListView(
-                          padding: EdgeInsets.zero,
-                          children: [
-                            _buildDrawerItem(
-                              context, 
-                              icon: Icons.person, 
-                              text: 'My Profile', 
-                              onTap: (){}, 
-                              icon2: Icons.arrow_forward_ios_rounded
-                            ),
-                            _buildDrawerItem(
-                              context, 
-                              icon: Icons.settings_outlined, 
-                              text: 'App Settings', 
-                              onTap: (){}, 
-                              icon2: Icons.arrow_forward_ios_rounded
-                            ),
-                            _buildDrawerItem(
-                              context, 
-                              icon: Icons.auto_fix_high_outlined, 
-                              text: 'Themes', 
-                              onTap: (){}, 
-                              icon2: Icons.arrow_forward_ios_rounded
-                            ),
-                            _buildDrawerItem(
-                              context, 
-                              icon: Icons.dark_mode_outlined, 
-                              text: 'Dark Mode', 
-                              onTap: (){}, 
-                              icon2: Icons.arrow_forward_ios_rounded
-                            ),
-                          ],
-                        )
+                      _buildDrawerItem(
+                        context, 
+                        icon: Icons.person, 
+                        text: 'My Profile', 
+                        onTap: (){}, 
+                        icon2: Icons.arrow_forward_ios_rounded
                       ),
+                      _buildDrawerItem(
+                        context, 
+                        icon: Icons.settings_outlined, 
+                        text: 'App Settings', 
+                        onTap: (){}, 
+                        icon2: Icons.arrow_forward_ios_rounded
+                      ),
+                      _buildDrawerItem(
+                        context, 
+                        icon: Icons.auto_fix_high_outlined, 
+                        text: 'Themes', 
+                        onTap: (){}, 
+                        icon2: Icons.arrow_forward_ios_rounded
+                      ),
+                      _buildDrawerItem(
+                        context, 
+                        icon: Icons.dark_mode_outlined, 
+                        text: 'Dark Mode', 
+                        onTap: (){},
+
+                      ),
+                      _buildDrawerItem(
+                        context, 
+                        icon: Icons.menu_book_outlined, 
+                        text: 'Info Update', 
+                        onTap: (){},
+                        icon2: Icons.arrow_forward_ios_rounded
+                      ),
+                      _buildDrawerItem(
+                        context, 
+                        icon: Icons.qr_code_scanner_rounded, 
+                        text: 'My QR', 
+                        onTap: (){},
+                        icon2: Icons.arrow_forward_ios_rounded
+                      ),
+                      _buildDrawerItem(
+                        context, 
+                        icon: Icons.logout, 
+                        text: 'Log Out', 
+                        onTap: (){},
+                        color: Colors.red,
+                      )
                     ],
                   )
                 ],
@@ -216,12 +244,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Account", style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text("175******4050", style: TextStyle(color: Colors.grey)),
-                        ],
+                      GestureDetector(
+                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Account())),
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Account", style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text("175******4050", style: TextStyle(color: Colors.grey)),
+                          ],
+                        ),
                       ),
                       Row(
                         children: [
@@ -349,6 +380,243 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           )
         ],
       ),
+    );
+  }
+}
+
+
+
+
+class Account extends StatelessWidget {
+  const Account({super.key});
+
+  Widget _buildListTile({required IconData icon, required String text}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black12),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black12, offset: const Offset(-4, 4), blurRadius: 6)
+        ],
+      ),
+      child: ListTile(
+        leading: Icon(icon, color: Colors.black54),
+        title: Text(text),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        onTap: () {},
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.blue.shade800,
+          elevation: 0,
+          leading: const BackButton(color: Colors.white),
+          title: const Text('Account', style: TextStyle(color: Colors.white)),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Account Info Card
+              Container(
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: const [
+                    BoxShadow(blurRadius: 4, color: Colors.black12)
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                        radius: 24, backgroundColor: Colors.grey.shade200),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text("Jane Doe",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          SizedBox(height: 4),
+                          Text("Savings Account\n173000000000012",
+                              style: TextStyle(fontSize: 12)),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: const Text("Active",
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 12)),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Balance Box
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 30,
+                      child: Stack(
+                        children: [
+                          Text(
+                            'Balance',
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            child: Text(
+                              'USD',
+                              style: TextStyle(
+                                  fontSize: 10, color: Colors.black87),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text("1503259.34",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue)),
+                  ],
+                ),
+              ),
+
+              // Summary Header
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("Summary",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    Text("Dec 13, 2004", style: TextStyle(color: Colors.grey)),
+                  ],
+                ),
+              ),
+
+              // Tab Bar
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: TabBar(
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.grey,
+                  indicatorColor: Colors.blue,
+                  tabs: [
+                    Tab(text: 'This Week'),
+                    Tab(text: 'This Month'),
+                    Tab(text: 'This Year'),
+                  ],
+                ),
+              ),
+
+              // Chart View with fixed height
+              SizedBox(
+                height: 300,
+                child: TabBarView(
+                  children: [
+                    _buildChartTab(),
+                    Center(child: Text('This Month Chart')),
+                    Center(child: Text('This Year Chart')),
+                  ],
+                ),
+              ),
+
+              // History and Statement Tiles
+              const SizedBox(height: 12),
+              _buildListTile(icon: Icons.history, text: 'History'),
+              _buildListTile(icon: Icons.difference_rounded, text: 'Statement'),
+              const SizedBox(height: 24),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Widget _buildChartTab() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: BarChart(
+        BarChartData(
+          barGroups: [
+            makeGroup(0, 3, 1),
+            makeGroup(1, 2, 1.5),
+            makeGroup(2, 2.5, 1.2),
+            makeGroup(3, 3.5, 2),
+            makeGroup(4, 3, 2.5),
+            makeGroup(5, 2, 3),
+            makeGroup(6, 3, 2.8),
+          ],
+          titlesData: FlTitlesData(
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                getTitlesWidget: (value, meta) {
+                  const days = ['Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu'];
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text(
+                      days[value.toInt()],
+                      style: const TextStyle(fontSize: 10),
+                    ),
+                  );
+                },
+              ),
+            ),
+            leftTitles: AxisTitles(
+              sideTitles:
+                  SideTitles(showTitles: true, interval: 1, reservedSize: 28),
+            ),
+          ),
+          gridData: FlGridData(show: true),
+          borderData: FlBorderData(show: false),
+        ),
+      ),
+    );
+  }
+
+  static BarChartGroupData makeGroup(int x, double left, double right) {
+    return BarChartGroupData(
+      x: x,
+      barRods: [
+        BarChartRodData(toY: left, color: Colors.teal, width: 8),
+        BarChartRodData(toY: right, color: Colors.orange, width: 8),
+      ],
+      barsSpace: 4,
     );
   }
 }
