@@ -419,6 +419,7 @@ class Account extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.blue.shade800,
+          centerTitle: true,
           elevation: 0,
           leading: const BackButton(color: Colors.white),
           title: const Text('Account', style: TextStyle(color: Colors.white)),
