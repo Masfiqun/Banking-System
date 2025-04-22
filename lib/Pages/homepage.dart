@@ -390,27 +390,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 class Account extends StatelessWidget {
   const Account({super.key});
 
-  Widget _buildListTile({required IconData icon, required String text}) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.black12),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black12, offset: const Offset(-4, 4), blurRadius: 6)
-        ],
-      ),
-      child: ListTile(
-        leading: Icon(icon, color: Colors.black54),
-        title: Text(text),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-        onTap: () {},
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -558,8 +537,14 @@ class Account extends StatelessWidget {
 
               // History and Statement Tiles
               const SizedBox(height: 12),
-              _buildListTile(icon: Icons.history, text: 'History'),
-              _buildListTile(icon: Icons.difference_rounded, text: 'Statement'),
+              _buildListTile(
+                icon: Icons.history, 
+                text: 'History', 
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryScreen()));
+                }
+              ),
+              _buildListTile(icon: Icons.difference_rounded, text: 'Statement', onTap: (){}),
               const SizedBox(height: 24),
             ],
           ),
@@ -567,6 +552,28 @@ class Account extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildListTile({required IconData icon, required String text, required VoidCallback onTap}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black12),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black12, offset: const Offset(-4, 4), blurRadius: 6)
+        ],
+      ),
+      child: ListTile(
+        leading: Icon(icon, color: Colors.black54),
+        title: Text(text),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        onTap: onTap,
+      ),
+    );
+  }
+
 
   static Widget _buildChartTab() {
     return Padding(
@@ -621,3 +628,204 @@ class Account extends StatelessWidget {
     );
   }
 }
+
+
+class HistoryScreen extends StatefulWidget {
+   const HistoryScreen({super.key});
+
+  @override
+  State<HistoryScreen> createState() => _HistoryScreenState();
+}
+
+class _HistoryScreenState extends State<HistoryScreen> {
+  String selectedAccount = '169****81';
+
+  List<String> accounts = ['169****81', '173****22', '176****98'];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.blue.shade800,
+        leading: const BackButton(color: Colors.white),
+        title: const Text("History", style: TextStyle(color: Colors.white)),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 16),
+
+          // Account Selector & Month Picker
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.black12),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.account_balance, size: 20, color: Colors.black54),
+                        const SizedBox(width: 8),
+                        Row(
+                          children: [
+                            DropdownButton<String>(
+                              value: selectedAccount,
+                              underline: const SizedBox(),
+                              icon: const SizedBox(), // Remove the built-in icon
+                              items: accounts.map((String account) {
+                                return DropdownMenuItem<String>(
+                                  value: account,
+                                  child: Text(account),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                if (newValue != null) {
+                                  setState(() {
+                                    selectedAccount = newValue;
+                                  });
+                                }
+                              },
+                            ),
+                            const SizedBox(width: 8), // Add space before the arrow
+                            const Icon(Icons.keyboard_arrow_down),
+                          ],
+                        ),
+                      ],
+                    )
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.black12),
+                  ),
+                  child: Row(
+                    children: const [
+                      Text("Feb 2004"),
+                      SizedBox(width: 8),
+                      Icon(Icons.calendar_today, size: 18),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 16),
+
+          // Filter Tabs
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildFilterChip("All", true),
+                _buildFilterChip("In", true),
+                _buildFilterChip("Out", true),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 12),
+
+          // Transaction List
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              children: [
+                _buildTransactionTile("23", "Feb", "USD 170.00", "Seychelles Credit Union Account Transfer\nTransfer: 169****81 to 174****22\n08:12 PM", false),
+                _buildTransactionTile("15", "Feb", "USD 500.00", "Seychelles Credit Union Account Transfer\nTransfer: 176****98 to 173****12\n11:00 AM", true),
+                _buildTransactionTile("12", "Feb", "USD 30.00", "Mobile Recharge\nTRX 6DEF58SACG9\n04:20 AM", false),
+                _buildTransactionTile("05", "Feb", "USD 250.00", "Seychelles Credit Union Account Transfer\nTransfer: 173****65 to 169****81\n12:03 PM", true),
+                _buildTransactionTile("02", "Feb", "USD 350.00", "Seychelles Credit Union Account Transfer\nTransfer: 173****65 to 173****12\n2:03 PM", true),
+                _buildTransactionTile("01", "Feb", "USD 550.00", "Payment to DPDC–Prepaid Bill\nDPDC–Prepaid Bill\n05:55 AM", false),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFilterChip(String label, bool isSelected) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: isSelected ? Colors.blue.shade100 : Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(label, style: TextStyle(color: isSelected ? Colors.blue : Colors.black54)),
+    );
+  }
+
+  Widget _buildTransactionTile(String day, String month, String amount, String description, bool isCredit) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Date Bubble
+          Container(
+            width: 50,
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              children: [
+                Text(day, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(month, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+
+          // Details
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      isCredit ? Icons.arrow_downward : Icons.arrow_upward,
+                      size: 16,
+                      color: isCredit ? Colors.green : Colors.red,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      amount,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: isCredit ? Colors.green : Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(description, style: const TextStyle(fontSize: 13)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
