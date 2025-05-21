@@ -1,3 +1,4 @@
+import 'package:banking_system/Utils/color.dart';
 import 'package:flutter/material.dart';
 
 class CardPayment extends StatelessWidget {
@@ -8,27 +9,33 @@ class CardPayment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: AppColors.background,
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: AppColors.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(10), // round bottom corners
+          ),
+        ),
+        iconTheme: IconThemeData(
+          color: AppColors.appBarIcon
+        ),
+        title: Text(
+          'Card Payment',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Divider(
-                indent: 100,
-                endIndent: 100,
-                thickness: 3,
-              ),
-              // Title
-              const Text(
-                'Card Payment',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
               const SizedBox(height: 4),
               const Text(
-                'Make cashless payments seamlessly',
-                style: TextStyle(fontSize: 14, color: Colors.black54),
+                'Make cashless payments seamlessly.',
+                style: TextStyle(fontSize: 18, color: Colors.black54),
               ),
               const SizedBox(height: 24),
 

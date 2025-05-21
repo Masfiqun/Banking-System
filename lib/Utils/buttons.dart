@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:banking_system/Utils/color.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  final Color color;
-  final Color textcolor;
 
-  const CustomButton({required this.textcolor, required this.color, required this.text, required this.onPressed, super.key});
+  const CustomButton({required this.text, required this.onPressed, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: color,
+          backgroundColor: AppColors.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -26,7 +25,7 @@ class CustomButton extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
-            color: textcolor
+            color: AppColors.text
           ),
         ),
       ),
@@ -55,8 +54,8 @@ class ActionButton extends StatelessWidget {
           GestureDetector(
             onTap: onPressed,
             child: CircleAvatar(
-              backgroundColor: Colors.blue.shade50,
-              child: Icon(icon, color: Colors.blue),
+              backgroundColor: AppColors.primary,
+              child: Icon(icon, color: AppColors.appBarIcon),
             ),
           ),
           const SizedBox(height: 6),
@@ -91,7 +90,7 @@ class CommonCard extends StatelessWidget {
       width: double.infinity,
       height: 200,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(colors: [Colors.indigo, Colors.blueAccent]),
+        gradient: const LinearGradient(colors: [Colors.indigo, AppColors.primary]),
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(

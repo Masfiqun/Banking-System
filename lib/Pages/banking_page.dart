@@ -1,3 +1,4 @@
+import 'package:banking_system/Utils/color.dart';
 import 'package:flutter/material.dart';
 
 class MyBankingPage extends StatelessWidget {
@@ -41,14 +42,14 @@ class MyBankingPage extends StatelessWidget {
                   title: 'My Acc. Transfer',
                   subtitle: 'Transfer to your SCU account',
                   color: Colors.lightBlue.shade50,
-                  icolor: Colors.blue,
+                  icolor: AppColors.primary,
                 ),
                 _buildCardOption(
                   icon: Icons.signpost_rounded,
                   title: 'My MFS Transfer',
                   subtitle: 'Transfer to your MFS account',
                   color: Colors.lightBlue.shade50,
-                  icolor: Colors.blue,
+                  icolor: AppColors.primary,
                 ),
                 _buildCardOption(
                   icon: Icons.credit_card,

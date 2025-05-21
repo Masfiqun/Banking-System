@@ -1,4 +1,5 @@
 import 'package:banking_system/Pages/loginpage.dart';
+import 'package:banking_system/Utils/color.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
         useMaterial3: true,
       ),
       home: LoginPage(),

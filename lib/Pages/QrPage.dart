@@ -60,8 +60,6 @@ class QRPayPage extends StatelessWidget {
                     ),
                   ),
                   CustomButton(
-                    textcolor: Colors.white, 
-                    color: Colors.blue, 
                     text: 'Continue', 
                     onPressed: (){}
                   ),

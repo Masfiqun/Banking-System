@@ -1,5 +1,6 @@
 import 'package:banking_system/Pages/cardPayment.dart';
 import 'package:banking_system/Utils/buttons.dart';
+import 'package:banking_system/Utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -81,6 +82,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: AppColors.background,
         key: _scaffoldKey, 
         drawer: Drawer(
           // drawer content here
@@ -190,7 +192,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         slivers: [
           SliverAppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: Colors.blue.shade800,
+            backgroundColor: AppColors.primary,
             expandedHeight: 120,
             pinned: true,
             shape: RoundedRectangleBorder(
@@ -208,7 +210,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       radius: 23,
                       backgroundColor: Colors.white,
                       child: CircleAvatar(
-                        backgroundColor: Colors.blue.shade700,
+                        backgroundColor: AppColors.primary,
                         radius: 20,
                       ),
                     ),
@@ -217,7 +219,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Good Afternoon', style: TextStyle(color: Colors.white)),
+                        GestureDetector(
+                          onTap: () {
+                            _scaffoldKey.currentState?.openDrawer();
+                          },
+                          child: Text('Good Afternoon', style: TextStyle(color: Colors.white))
+                        ),
                         GestureDetector(
                           onTap: (){
                             _scaffoldKey.currentState?.openDrawer();
@@ -258,12 +265,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         children: [
                           CircleAvatar(
                             radius: 25,
-                            backgroundColor: Colors.blue,
+                            backgroundColor: AppColors.primary,
                             child: CircleAvatar(
                               radius: 23,
                               backgroundColor: Colors.white,
                               child: CircleAvatar(
-                                backgroundColor: Colors.blue,
+                                backgroundColor: AppColors.primary,
                                 child: Icon(Icons.attach_money, color: Colors.white)
                               ),
                             ),
@@ -274,10 +281,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             backgroundColor: Colors.white,
                             child: CircleAvatar(
                               radius: 23,
-                              backgroundColor: Colors.blue,
+                              backgroundColor: AppColors.primary,
                               child: CircleAvatar(
                                 backgroundColor: Colors.white,
-                                child: Icon(Icons.account_balance, color: Colors.blue)
+                                child: Icon(Icons.account_balance, color: AppColors.primary)
                               ),
                             ),
                           ),
@@ -343,7 +350,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     child: Container(
                       height: 200,
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(colors: [Colors.indigo, Colors.blueAccent]),
+                        gradient: const LinearGradient(colors: [Colors.indigo, AppColors.primary]),
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
@@ -397,7 +404,7 @@ class Account extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.blue.shade800,
+          backgroundColor: AppColors.primary,
           centerTitle: true,
           elevation: 0,
           leading: const BackButton(color: Colors.white),
@@ -488,7 +495,7 @@ class Account extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue)),
+                            color: AppColors.primary)),
                   ],
                 ),
               ),
@@ -514,7 +521,7 @@ class Account extends StatelessWidget {
                 child: TabBar(
                   labelColor: Colors.black,
                   unselectedLabelColor: Colors.grey,
-                  indicatorColor: Colors.blue,
+                  indicatorColor: AppColors.primary,
                   tabs: [
                     Tab(text: 'This Week'),
                     Tab(text: 'This Month'),
@@ -632,7 +639,7 @@ class Account extends StatelessWidget {
 
 class HistoryScreen extends StatefulWidget {
    const HistoryScreen({super.key});
-
+  
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
 }
@@ -647,7 +654,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blue.shade800,
+        backgroundColor: AppColors.primary,
         leading: const BackButton(color: Colors.white),
         title: const Text("History", style: TextStyle(color: Colors.white)),
         centerTitle: true,
@@ -761,10 +768,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: isSelected ? Colors.blue.shade100 : Colors.grey.shade200,
+        color: isSelected ? AppColors.primary : Colors.grey.shade200,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Text(label, style: TextStyle(color: isSelected ? Colors.blue : Colors.black54)),
+      child: Text(label, style: TextStyle(color: isSelected ? AppColors.text : Colors.black54)),
     );
   }
 

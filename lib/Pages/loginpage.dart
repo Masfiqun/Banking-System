@@ -1,5 +1,6 @@
 import 'package:banking_system/Pages/dashboard.dart';
 import 'package:banking_system/Utils/buttons.dart';
+import 'package:banking_system/Utils/color.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -93,8 +94,6 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardPage()));
                   },
-                  color: Colors.blue,
-                  textcolor: Colors.white,
                 ),
 
                 SizedBox(height: 30),
@@ -104,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                   onTap: () {},
                   child: Text(
                     'Forgot ID or Password?',
-                    style: TextStyle(color: Colors.blue),
+                    style: TextStyle(color: AppColors.primary),
                   ),
                 ),
 
@@ -116,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                   onTap: () {},
                   child: Text(
                     'SignUp',
-                    style: TextStyle(color: Colors.blue),
+                    style: TextStyle(color: AppColors.primary),
                   ),
                 ),
 
@@ -133,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: Colors.grey.shade200,
-                  child: Icon(Icons.fingerprint, size: 40, color: Colors.blue),
+                  child: Icon(Icons.fingerprint, size: 40, color: AppColors.primary),
                 ),
 
                 SizedBox(height: 30),

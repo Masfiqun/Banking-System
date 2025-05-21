@@ -2,6 +2,7 @@ import 'package:banking_system/Pages/QrPage.dart';
 import 'package:banking_system/Pages/banking_page.dart';
 import 'package:banking_system/Pages/findATM.dart';
 import 'package:banking_system/Pages/homepage.dart';
+import 'package:banking_system/Utils/color.dart';
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -76,7 +77,7 @@ class _DashboardPageState extends State<DashboardPage> {
         child: BottomNavigationBar(
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white70,
-          backgroundColor: Colors.blue.shade800,
+          backgroundColor: AppColors.primary,
           currentIndex: _currentIndex,
           type: BottomNavigationBarType.fixed,
           onTap: _onTabTapped,
