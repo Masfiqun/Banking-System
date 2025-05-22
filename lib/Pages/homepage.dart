@@ -1,4 +1,7 @@
+import 'package:banking_system/Pages/Acc.dart';
+import 'package:banking_system/Pages/AccBalance.dart';
 import 'package:banking_system/Pages/cardPayment.dart';
+import 'package:banking_system/Pages/fundTransfer.dart';
 import 'package:banking_system/Utils/buttons.dart';
 import 'package:banking_system/Utils/color.dart';
 import 'package:flutter/material.dart';
@@ -263,28 +266,41 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       ),
                       Row(
                         children: [
-                          CircleAvatar(
-                            radius: 25,
-                            backgroundColor: AppColors.primary,
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent, 
+                                builder: (context) => const AccountBalanceCard()
+                              );
+                            },
                             child: CircleAvatar(
-                              radius: 23,
-                              backgroundColor: Colors.white,
+                              radius: 25,
+                              backgroundColor: AppColors.primary,
                               child: CircleAvatar(
-                                backgroundColor: AppColors.primary,
-                                child: Icon(Icons.attach_money, color: Colors.white)
+                                radius: 23,
+                                backgroundColor: Colors.white,
+                                child: CircleAvatar(
+                                  backgroundColor: AppColors.primary,
+                                  child: Icon(Icons.attach_money, color: Colors.white)
+                                ),
                               ),
                             ),
                           ),
                           SizedBox(width: 10),
-                          CircleAvatar(
-                            radius: 25,
-                            backgroundColor: Colors.white,
+                          GestureDetector(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountsPage())),
                             child: CircleAvatar(
-                              radius: 23,
-                              backgroundColor: AppColors.primary,
+                              radius: 25,
+                              backgroundColor: Colors.white,
                               child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Icon(Icons.account_balance, color: AppColors.primary)
+                                radius: 23,
+                                backgroundColor: AppColors.primary,
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(Icons.account_balance, color: AppColors.primary)
+                                ),
                               ),
                             ),
                           ),
@@ -305,7 +321,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     runSpacing: 20,
                     spacing: 20,
                     children: [
-                      ActionButton(icon: Icons.send, label: "Fund Transfer", onPressed: () {}),
+                      ActionButton(
+                        icon: Icons.send, 
+                        label: "Fund Transfer", 
+                        onPressed: () {
+                          showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent, 
+                                builder: (context) => const FundTransfer()
+                              );
+                        }
+                      ),
                       ActionButton(icon: Icons.receipt_long_rounded, label: "Pay Bill", onPressed: () {}),
                       ActionButton(icon: Icons.credit_card, label: "Card Payment", onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => CardPayment()));
@@ -390,7 +417,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 }
-
 
 
 
@@ -635,6 +661,7 @@ class Account extends StatelessWidget {
     );
   }
 }
+
 
 
 class HistoryScreen extends StatefulWidget {
