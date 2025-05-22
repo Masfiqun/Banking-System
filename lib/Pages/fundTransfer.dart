@@ -1,3 +1,6 @@
+import 'package:banking_system/Pages/MFS.dart';
+import 'package:banking_system/Pages/NPS.dart';
+import 'package:banking_system/Pages/SCU.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +8,65 @@ import 'package:banking_system/Utils/color.dart';
 
 class FundTransfer extends StatelessWidget {
   const FundTransfer({super.key});
+
+    void showTransferModeDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: true, // don't close on outside tap
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          contentPadding: const EdgeInsets.all(20),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Select a transfer mode",
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  transferOption(
+                    context,
+                    icon: 'asset/icon/ledger-icon.svg',
+                    color: AppColors.primary,
+                    label: 'FTN',
+                    onTap: () {
+
+                    },
+                  ),
+                  transferOption(
+                    context,
+                    icon: 'asset/icon/ethical-black-icon.svg',
+                    color: AppColors.primary,
+                    label: 'NPS',
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => NPS()));
+                    },
+                  ),
+                  transferOption(
+                    context,
+                    icon: 'asset/icon/document-approve.svg',
+                    color: AppColors.primary,
+                    label: 'RTGS',
+                    onTap: () {
+
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +129,9 @@ class FundTransfer extends StatelessWidget {
                       subtitle: 'To SCU Account',
                       color: Colors.lightBlue.shade50,
                       icolor: AppColors.primary, 
-                      onPressed: () {  },
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SCU()));
+                      },
                     ),
                     _buildCardOption(
                       context,
@@ -76,7 +140,7 @@ class FundTransfer extends StatelessWidget {
                       subtitle: 'To Other Bank Account',
                       color: Colors.lightBlue.shade50,
                       icolor: AppColors.primary, 
-                      onPressed: () {  },
+                      onPressed: () => showTransferModeDialog(context),
                     ),
                     _buildCardOption(
                       context,
@@ -94,7 +158,9 @@ class FundTransfer extends StatelessWidget {
                       subtitle: 'To MFS Accounts',
                       color: Colors.orange.shade50,
                       icolor: Colors.orange, 
-                      onPressed: () {  },
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => MFS()));
+                      },
                     ),
                   ],
                 ),
@@ -117,76 +183,74 @@ class FundTransfer extends StatelessWidget {
     );
   }
 
-Widget _buildCardOption(
-  BuildContext context, {
-  required String icon,
-  required String title,
-  required String subtitle,
-  required Color color,
-  required Color icolor,
-  required VoidCallback onPressed,
-}) {
-  final double cardWidth = (MediaQuery.of(context).size.width - 16 * 3) / 2;
-  // screen width minus 3 spacings (left + middle + right), then divided by 2
+  Widget _buildCardOption(
+    BuildContext context, {
+    required String icon,
+    required String title,
+    required String subtitle,
+    required Color color,
+    required Color icolor,
+    required VoidCallback onPressed,
+  }) {
+    final double cardWidth = (MediaQuery.of(context).size.width - 16 * 3) / 2;
+    // screen width minus 3 spacings (left + middle + right), then divided by 2
 
-  return GestureDetector(
-    onTap: onPressed,
-    child: SizedBox(
-      width: cardWidth,
-      child: Material(
-        elevation: 4,
-        borderRadius: BorderRadius.circular(16),
-        shadowColor: Colors.black12,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                offset: const Offset(-4,4),
-                blurRadius: 6
-              )
-            ]
-          ),
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CircleAvatar(
-                radius: 22,
-                backgroundColor: color,
-                child: SvgPicture.asset(
-                  '$icon',
-                  height: 25,
-                  width: 25,
-                  color: icolor,
+    return GestureDetector(
+      onTap: onPressed,
+      child: SizedBox(
+        width: cardWidth,
+        child: Material(
+          elevation: 4,
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: const Offset(-4,4),
+                  blurRadius: 6
+                )
+              ]
+            ),
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 22,
+                  backgroundColor: color,
+                  child: SvgPicture.asset(
+                    '$icon',
+                    height: 25,
+                    width: 25,
+                    color: icolor,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 14),
-              Text(
-                title,
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+                const SizedBox(height: 14),
+                Text(
+                  title,
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                subtitle,
-                style: GoogleFonts.poppins(
-                  fontSize: 12,
-                  color: Colors.grey.shade600,
+                const SizedBox(height: 6),
+                Text(
+                  subtitle,
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    color: Colors.grey.shade600,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   Widget _buildListTile({required String icon, required String text, required VoidCallback onPressed}) {
     return Material(
@@ -203,15 +267,43 @@ Widget _buildCardOption(
             width: 20,
           ),
         ),
-        title: Text(
-          text,
-          style: GoogleFonts.poppins(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
+        title: Center(
+          child: Text(
+            text,
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
         onTap: onPressed,
+      ),
+    );
+  }
+
+  Widget transferOption(BuildContext context,
+      {required String icon,
+      required String label,
+      required Color color,
+      required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+              SvgPicture.asset(
+                '$icon',
+                height: 30,
+                width: 30,
+                color: color,
+              ),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+          ),
+          const Icon(Icons.arrow_right_alt),
+        ],
       ),
     );
   }
