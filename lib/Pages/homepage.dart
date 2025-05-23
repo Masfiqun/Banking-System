@@ -1,7 +1,8 @@
 import 'package:banking_system/Pages/Acc.dart';
 import 'package:banking_system/Pages/AccBalance.dart';
+import 'package:banking_system/Pages/PayBill/payBill.dart';
 import 'package:banking_system/Pages/cardPayment.dart';
-import 'package:banking_system/Pages/fundTransfer.dart';
+import 'package:banking_system/Pages/Fund%20Transfer/fundTransfer.dart';
 import 'package:banking_system/Utils/buttons.dart';
 import 'package:banking_system/Utils/color.dart';
 import 'package:flutter/material.dart';
@@ -333,7 +334,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               );
                         }
                       ),
-                      ActionButton(icon: Icons.receipt_long_rounded, label: "Pay Bill", onPressed: () {}),
+                      ActionButton(icon: Icons.receipt_long_rounded, label: "Pay Bill", onPressed: () {
+                        showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent, 
+                                builder: (context) => const PayBill()
+                              );
+                      }),
                       ActionButton(icon: Icons.credit_card, label: "Card Payment", onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => CardPayment()));
                       }),

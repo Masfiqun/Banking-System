@@ -1,6 +1,6 @@
-import 'package:banking_system/Pages/MFS.dart';
-import 'package:banking_system/Pages/NPS.dart';
-import 'package:banking_system/Pages/SCU.dart';
+import 'package:banking_system/Pages/Fund%20Transfer/MFS.dart';
+import 'package:banking_system/Pages/Fund%20Transfer/NPS.dart';
+import 'package:banking_system/Pages/Fund%20Transfer/SCU.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
