@@ -1,6 +1,9 @@
 import 'package:banking_system/Pages/Acc.dart';
 import 'package:banking_system/Pages/AccBalance.dart';
+import 'package:banking_system/Pages/Add%20Money/addMoney.dart';
+import 'package:banking_system/Pages/More/more.dart';
 import 'package:banking_system/Pages/PayBill/payBill.dart';
+import 'package:banking_system/Pages/Recharge/recharge.dart';
 import 'package:banking_system/Pages/cardPayment.dart';
 import 'package:banking_system/Pages/Fund%20Transfer/fundTransfer.dart';
 import 'package:banking_system/Utils/buttons.dart';
@@ -339,15 +342,26 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 context: context,
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent, 
-                                builder: (context) => const PayBill()
+                                builder: (context) =>  PayBill()
                               );
                       }),
                       ActionButton(icon: Icons.credit_card, label: "Card Payment", onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => CardPayment()));
                       }),
-                      ActionButton(icon: Icons.add, label: "Add Money", onPressed: () {}),
-                      ActionButton(icon: Icons.phone_android, label: "Recharge", onPressed: () {}),
-                      ActionButton(icon: Icons.more_horiz, label: "More", onPressed: () {}),
+                      ActionButton(icon: Icons.add, label: "Add Money", onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => AddMoneyPage()));
+                      }),
+                      ActionButton(icon: Icons.phone_android, label: "Recharge", onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => RechargePage()));
+                      }),
+                      ActionButton(icon: Icons.more_horiz, label: "More", onPressed: () {
+                        showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent, 
+                                builder: (context) =>  More()
+                              );
+                      }),
                     ],
                   ),
                 ),

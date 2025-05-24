@@ -9,246 +9,176 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 
-// CategoryIcon widget
-class CategoryIcon extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const CategoryIcon({required this.icon, required this.label, super.key});
-
+class RechargePage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.primary,
-          ),
-          child: Icon(icon, size: 30, color: AppColors.appBarIcon),
-        ),
-        const SizedBox(height: 6),
-        Text(label, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-      ],
-    );
-  }
+  _RechargePageState createState() => _RechargePageState();
 }
 
-// BillerTile widget
-class BillerTile extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final VoidCallback? onPressed;
+class _RechargePageState extends State<RechargePage> {
+  String? selectedAccount;
+  String? mobileNumber;
+  String selectedOption = 'Recharge';
+  // int? selectedAmount;
+  int selectedAmount = 500;
+  List<int> quickAmounts = [500, 1000, 5000, 10000];
 
-  const BillerTile({super.key, required this.title, required this.subtitle, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: Text(subtitle, style: const TextStyle(color: Colors.black54)),
-      onTap: onPressed,
-    );
-  }
-}
-
-// Main electricity widget
-class electricity extends StatelessWidget {
-  const electricity({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.65,
-      maxChildSize: 0.75,
-      minChildSize: 0.4,
-      expand: false,
-      builder: (context, scrollController) {
-        return Container(
-          padding: const EdgeInsets.all(24),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-          ),
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Drag handler
-                Center(
-                  child: Container(
-                    height: 5,
-                    width: 80,
-                    margin: const EdgeInsets.only(bottom: 24),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-
-                // Category icons carousel
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: const [
-                              CategoryIcon(icon: Icons.flash_on, label: 'Electricity'),
-                              SizedBox(width: 16),
-                              CategoryIcon(icon: Icons.opacity, label: 'Water'),
-                              SizedBox(width: 16),
-                              CategoryIcon(icon: Icons.phone, label: 'Telephone'),
-                              SizedBox(width: 16,),
-                              CategoryIcon(icon: Icons.public, label: 'Internet')
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-
-                // Biller list
-                 BillerTile(title: "DPDC - Postpaid", subtitle: "Electricity", onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ElectricityBillPage()));
-                 },),
-                const Divider(),
-                 BillerTile(title: "DPDC - Prepaid", subtitle: "Electricity", onPressed: () {  },),
-                const Divider(),
-                 BillerTile(title: "DESCO - Prepaid", subtitle: "Electricity", onPressed: () {  },),
-                const Divider(),
-                 BillerTile(title: "DESCO - Postpaid", subtitle: "Electricity", onPressed: () {  },),
-                const Divider(),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-
-
-class ElectricityBillPage extends StatefulWidget {
-  const ElectricityBillPage({Key? key}) : super(key: key);
-
-  @override
-  State<ElectricityBillPage> createState() => _ElectricityBillPageState();
-}
-
-class _ElectricityBillPageState extends State<ElectricityBillPage> {
-  final TextEditingController accountController =
-      TextEditingController(text: "Acc. 17250000000");
-  final TextEditingController customerNoController =
-      TextEditingController(text: "135215004");
-  final TextEditingController billPeriodController =
-      TextEditingController(text: "Jan 2004");
+  final List<String> options = ['History', 'Recharge', 'Internet'];
+  final List<int> amounts = [20, 50, 100, 129];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.text,
       appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        centerTitle: true,
-        title: Text("Electricity",
-            style: GoogleFonts.poppins(color: AppColors.appBarIcon)),
-        iconTheme: IconThemeData(color: AppColors.appBarIcon),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(10),
+        title: const Text(
+          'Mobile Recharge',
+          style: TextStyle(
+            color: AppColors.text
           ),
         ),
+        centerTitle: true,
+        backgroundColor: AppColors.primary,
+        iconTheme: IconThemeData(
+          color: AppColors.appBarIcon
+        ),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(10), // round bottom corners
+            ),
+          ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Column(
-                children: [
-                  Text("DPDC - Postpaid",
-                      style: GoogleFonts.poppins(
-                          fontSize: 16, fontWeight: FontWeight.w600)),
-                  Text("Electricity",
-                      style: GoogleFonts.poppins(color: Colors.grey)),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'STEPS',
+                  style: TextStyle(color: Colors.grey),
+                ),
+                Text(
+                  '2/10',
+                  style: TextStyle(color: Colors.grey),
+                )
+              ],
             ),
-            const SizedBox(height: 24),
-            Text("Pay From",
-                style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
+            const Text(
+              "Mobile Recharge",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const Text("Enter your recharge details"),
+            const SizedBox(height: 20),
+              
+            // Select account
             _buildInputField(
-              controller: accountController,
               icon: Icons.account_balance,
-              hintText: "Acc. 17250000000",
+              hintText: "Select account or card",
+              // onTap: () {},
             ),
-            const SizedBox(height: 20),
-            Text("DPDC Customer No.",
-                style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
-            const SizedBox(height: 8),
+              
+            const SizedBox(height: 15),
+              
+            // Mobile number input
             _buildInputField(
-              controller: customerNoController,
-              hintText: "Enter Customer No.",
-              keyboardType: TextInputType.number,
+              icon: Icons.account_balance,
+              hintText: "Enter mobile number",
+              keyboardType: TextInputType.phone,
             ),
+              
             const SizedBox(height: 20),
-            Text("Bill Period",
-                style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
-            const SizedBox(height: 8),
-            _buildInputField(
-              controller: billPeriodController,
-              icon: Icons.calendar_today,
-              hintText: "Select Bill Period",
-              onTap: () async {
-                // Example date picker
-                final selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2100),
+              
+            const Text(
+              "Recharge Option",
+              style: TextStyle(
+                fontWeight: FontWeight.w600
+              ),  
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: options.map((option) {
+                final isSelected = option == selectedOption;
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: ChoiceChip(
+                    label: Text(
+                      option,
+                      style: TextStyle(
+                        color: isSelected ? AppColors.text : AppColors.primary
+                      ),
+                    ),
+                    selectedColor: AppColors.primary,
+                    checkmarkColor: AppColors.appBarIcon,
+                    selected: isSelected,
+                    onSelected: (_) {
+                      setState(() {
+                        selectedOption = option;
+                      });
+                    },
+                  ),
                 );
-                if (selectedDate != null) {
-                  final formatted =
-                      "${_monthName(selectedDate.month)} ${selectedDate.year}";
-                  setState(() {
-                    billPeriodController.text = formatted;
-                  });
-                }
-              },
-              readOnly: true,
+              }).toList(),
             ),
+
             const SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {},
-              child: Row(
-                children: [
-                  const Icon(Icons.play_circle_fill, color: Colors.teal),
-                  const SizedBox(width: 6),
-                  Text("View Tutorial",
-                      style: GoogleFonts.poppins(
-                          color: Colors.teal, fontWeight: FontWeight.w500)),
-                ],
+
+            // Amount Label
+            Text(
+              "Recharge Amount",
+              style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 8),
+
+            // Amount Display
+            Center(
+              child: Text(
+                "\$${selectedAmount.toString()}",
+                style: GoogleFonts.poppins(fontSize: 28, fontWeight: FontWeight.w600),
               ),
             ),
+            const SizedBox(height: 6),
+
+            // Quick Select Amounts
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: quickAmounts.map((amount) {
+                final bool isSelected = selectedAmount == amount;
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedAmount = amount;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: isSelected ? Colors.black : Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: Text(
+                      "$amount",
+                      style: GoogleFonts.poppins(
+                        color: isSelected ? Colors.white : Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+              
+            const SizedBox(height: 20),
+
             Divider(
               thickness: 1,
-              indent: 20,
-              endIndent: 20,
             ),
+              
             const Spacer(),
+              
             CustomButton(text: 'Next', onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => OverviewPage()));
             })
@@ -259,59 +189,31 @@ class _ElectricityBillPageState extends State<ElectricityBillPage> {
   }
 
   Widget _buildInputField({
-    required TextEditingController controller,
-    IconData? icon,
-    String? hintText,
+    required IconData icon,
+    required String hintText,
     TextInputType keyboardType = TextInputType.text,
-    VoidCallback? onTap,
-    bool readOnly = false,
+    void Function()? onTap,
   }) {
     return TextField(
-      controller: controller,
-      readOnly: readOnly,
-      keyboardType: keyboardType,
+      readOnly: onTap != null,
       onTap: onTap,
+      keyboardType: keyboardType,
       decoration: InputDecoration(
-        prefixIcon:
-            icon != null ? Icon(icon, size: 20, color: AppColors.primary) : null,
+        prefixIcon: Icon(icon),
         hintText: hintText,
-        hintStyle: GoogleFonts.poppins(fontSize: 14),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Colors.blueGrey.shade100),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Colors.blueGrey.shade100),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Colors.blue),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       ),
-      style: GoogleFonts.poppins(fontSize: 14),
+      onChanged: (value) {
+        setState(() {
+          if (hintText.contains('mobile')) {
+            mobileNumber = value;
+          } else {
+            selectedAccount = value;
+          }
+        });
+      },
     );
-  }
-
-  String _monthName(int month) {
-    const months = [
-      '',
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ];
-    return months[month];
   }
 }
 
@@ -325,7 +227,7 @@ class OverviewPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         elevation: 0,
-        title: const Text("Electricity"),
+        title: const Text("Mobile Recharge"),
         centerTitle: true,
         titleTextStyle: GoogleFonts.poppins(
           fontSize: 18,
@@ -357,9 +259,9 @@ class OverviewPage extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("DPDC - Postpaid",
+                    Text("Mobile Recharge",
                         style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
-                    Text("Electricity",
+                    Text("017xxxxxxxx",
                         style: GoogleFonts.poppins(color: Colors.grey.shade600)),
                   ],
                 ),
@@ -371,7 +273,7 @@ class OverviewPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Payment From", style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+                Text("Transfer From", style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
                 const Icon(Icons.account_balance),
               ],
             ),
@@ -459,7 +361,7 @@ class OverviewPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         TextField(
-                          controller: TextEditingController(text: "SCU Transfer"),
+                          controller: TextEditingController(text: "Mobile Recharge"),
                           style: GoogleFonts.poppins(),
                           decoration: const InputDecoration(
                             border: InputBorder.none,
@@ -524,7 +426,7 @@ class OverviewPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Icon(icon, size: 28, color: Colors.blue),
+            Icon(icon, size: 28, color: AppColors.primary),
             const SizedBox(height: 8),
             Text(label, style: GoogleFonts.poppins(fontSize: 13)),
           ],
@@ -701,7 +603,7 @@ class Transaction extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         title: const Text(
-          'Electricity',
+          'Mobile Recharge',
           style: TextStyle(
             color: AppColors.text
           ),
@@ -733,7 +635,7 @@ class Transaction extends StatelessWidget {
               ),
             ),
             const Text(
-              'Electric Bill Payment is successfully completed',
+              'Mobile Recharge is successfully completed',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16),
             ),
@@ -817,6 +719,7 @@ class Transaction extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Container(
+              width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey.shade300),
